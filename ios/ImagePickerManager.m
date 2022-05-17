@@ -95,6 +95,10 @@ RCT_EXPORT_METHOD(launchImageLibrary:(NSDictionary *)options callback:(RCTRespon
     [ImagePickerUtils setupPickerFromOptions:picker options:self.options target:target];
     picker.delegate = self;
     
+    if (@available(iOS 11, *)) {
+        picker.videoExportPreset = AVAssetExportPresetPassthrough;
+    }
+    
     if([self.options[@"includeExtra"] boolValue]) {
         [self checkPhotosPermissions:^(BOOL granted) {
             if (!granted) {
